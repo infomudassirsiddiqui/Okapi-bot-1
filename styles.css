@@ -1,0 +1,155 @@
+/* public/styles.css */
+body {
+    background: linear-gradient(to bottom, #4B0082, #2E004F, #000000), url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mP8/5+h4GdmwYYAD5kREBBoQKwQAAAAASUVORK5CYII=') repeat;
+    background-blend-mode: overlay;
+    color: #fff;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+
+.pi-text {
+    color: #FFD700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.pi-logo-placeholder {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #FFD700 0%, #4B0082 70%);
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.pi-card {
+    background: #FFFFFF;
+    border: 2px solid #4B0082;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(75, 0, 130, 0.4);
+    color: #2E004F;
+    transition: transform 0.3s ease;
+}
+
+.pi-card:hover {
+    transform: translateY(-5px);
+}
+
+.btn-pi {
+    background: #4B0082;
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-pi:hover {
+    background: #FFD700;
+    color: #4B0082;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.btn-pi:disabled {
+    background: #cccccc;
+    border-color: #999999;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.btn-pi.loading::after {
+    content: "Loading...";
+    font-size: 0.8em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFD700;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+.animate-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+.animate-scale {
+    transition: transform 0.2s ease;
+}
+
+.animate-scale:active {
+    transform: scale(0.95);
+}
+
+.list-group-item {
+    background: #F9F9F9;
+    color: #2E004F;
+    border-color: #4B0082;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.pi-input {
+    background: #F9F9F9;
+    border: 2px solid #4B0082;
+    color: #2E004F;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.pi-input:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.carousel-control-prev, .carousel-control-next {
+    background: rgba(75, 0, 130, 0.5);
+    width: 10%;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    opacity: 0.8;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #FFD700;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.carousel-indicators .active {
+    background-color: #4B0082;
+}
+
+.carousel-item {
+    padding: 20px;
+}
+
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-fade .carousel-item.active {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

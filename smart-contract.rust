@@ -1,0 +1,44 @@
+use solana_program::{
+    account_info::{next_account_info, AccountInfo},
+    entrypoint,
+    entrypoint::ProgramResult,
+    msg,
+    program_error::ProgramError,
+    pubkey::Pubkey,
+    program::invoke_signed,
+};
+use spl_token::instruction::transfer;
+
+entrypoint!(process_instruction);
+
+pub fn process_instruction(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    instruction_data: &[u8],
+) -> ProgramResult {
+    let account_info_iter = &mut accounts.iter();
+    let source_account = next_account_info(account_info_iter)?;
+    let destination_account = next_account_info(account_info_iter)?;
+    let authority = next_account_info(account_info_iter)?;
+
+    let amount = u64::from_le_bytes(instruction_data[0..8].try_into().unwrap());
+
+    msg!("Transferring {} OKAPI tokens", amount);
+
+    let transfer_instruction = transfer(
+        &spl_token::id(),
+        source_account.key,
+        destination_account.key,
+        authority.key,
+        &[],
+        amount,
+    )?;
+
+    invoke_signed(
+        &transfer_instruction,
+        &[source_account.clone(), destination_account.clone(), authority.clone()],
+        &[],
+    )?;
+
+    Ok(())
+}
