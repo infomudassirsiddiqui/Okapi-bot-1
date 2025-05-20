@@ -22,6 +22,7 @@ window.onload = function () {
             const data = await response.json();
             document.getElementById("token-balance").textContent = data.balance || 0;
             document.getElementById("mining-rate").textContent = data.miningRate || 1;
+            return data;
         } catch (error) {
             console.error("Fetch user data error:", error);
             WebApp.showAlert("Failed to load user data!");
@@ -87,9 +88,10 @@ window.onload = function () {
             });
             if (!response.ok) throw new Error("Mining request failed");
             const data = await response.json();
+            if (!data.success) throw new Error(data.error || "Mining failed");
             document.getElementById("token-balance").textContent = data.balance;
             document.getElementById("mining-rate").textContent = data.miningRate;
-            await updateTokenBalance(); // Sync with Solana
+            await updateTokenBalance();
             WebApp.showAlert(`Mined ${data.miningRate} OKAPI!`);
         } catch (error) {
             console.error("Mining error:", error);
@@ -182,7 +184,7 @@ window.onload = function () {
     }
 
     WebApp.onEvent("themeChanged", () => {
-        document.body.style.background = WebApp.themeParams.bg_color || "linear-gradient(to bottom, #4B0082, #2E004F, #000000), url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mP8/5+h4GdmwYYAD5kREBBoQKwQAAAAASUVORK5CYII=') repeat";
+        document.body.style.background = WebApp.themeParams.bg_color || "linear-gradient(to bottom, #4B0082, #2E004F)";
     });
 
     fetchUserData();
