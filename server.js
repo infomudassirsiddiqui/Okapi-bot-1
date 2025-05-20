@@ -26,6 +26,7 @@ function getUser(userId) {
 app.get("/user/:userId", async (req, res) => {
     const userId = req.params.userId;
     const user = getUser(userId);
+    console.log(`Fetching user ${userId} - Balance: ${user.balance}, Rate: ${user.miningRate}`);
     res.json(user);
 });
 
@@ -34,18 +35,18 @@ app.post("/mine", async (req, res) => {
     const { userId, wallet } = req.body;
     try {
         if (!wallet || !userId) {
+            console.error("Mining failed: Invalid request - Missing wallet or userId");
             return res.status(400).json({ success: false, error: "Invalid request" });
         }
         const user = getUser(userId);
         const walletPubkey = new PublicKey(wallet);
         console.log(`Before mining - User ${userId} balance: ${user.balance}, rate: ${user.miningRate}`);
         user.balance += user.miningRate;
-        console.log(`After mining - User ${userId} balance: ${user.balance}`);
+        console.log(`After mining - User ${userId} balance: ${user.balance}, rate: ${user.miningRate}`);
         // TODO: Trigger Solana token transfer via Rust program
-        console.log(`Mining ${user.miningRate} OKAPI to wallet ${wallet}`);
         res.json({ success: true, balance: user.balance, miningRate: user.miningRate });
     } catch (error) {
-        console.error("Mining error:", error);
+        console.error("Mining error:", error.message);
         res.status(500).json({ success: false, error: "Mining failed" });
     }
 });
@@ -55,19 +56,21 @@ app.post("/buy-booster", async (req, res) => {
     const { userId, wallet } = req.body;
     try {
         if (!wallet || !userId) {
+            console.error("Booster failed: Invalid request - Missing wallet or userId");
             return res.status(400).json({ success: false, error: "Invalid request" });
         }
         const user = getUser(userId);
+        console.log(`Before booster - User ${userId} balance: ${user.balance}, rate: ${user.miningRate}`);
         if (user.balance < 10) {
+            console.error(`Booster failed: User ${userId} has insufficient balance (${user.balance})`);
             return res.status(400).json({ success: false, error: "Insufficient balance" });
         }
-        console.log(`Before booster - User ${userId} balance: ${user.balance}, rate: ${user.miningRate}`);
         user.balance -= 10;
         user.miningRate *= 2;
         console.log(`After booster - User ${userId} balance: ${user.balance}, rate: ${user.miningRate}`);
         res.json({ success: true, balance: user.balance, miningRate: user.miningRate });
     } catch (error) {
-        console.error("Booster error:", error);
+        console.error("Booster error:", error.message);
         res.status(500).json({ success: false, error: "Booster purchase failed" });
     }
 });
@@ -77,6 +80,7 @@ app.post("/claim-task", async (req, res) => {
     const { userId, wallet, reward } = req.body;
     try {
         if (!wallet || !userId || !reward) {
+            console.error("Task claim failed: Invalid request - Missing wallet, userId, or reward");
             return res.status(400).json({ success: false, error: "Invalid request" });
         }
         const user = getUser(userId);
@@ -86,18 +90,24 @@ app.post("/claim-task", async (req, res) => {
         // TODO: Trigger Solana token transfer via Rust program
         res.json({ success: true, balance: user.balance });
     } catch (error) {
-        console.error("Task claim error:", error);
+        console.error("Task claim error:", error.message);
         res.status(500).json({ success: false, error: "Task claim failed" });
     }
 });
 
 // Leaderboard
 app.get("/leaderboard", (req, res) => {
-    const leaderboard = Array.from(users.entries())
-        .map(([userId, user]) => ({ username: user.username, balance: user.balance }))
-        .sort((a, b) => b.balance - a.balance)
-        .slice(0, 5);
-    res.json(leaderboard);
+    try {
+        const leaderboard = Array.from(users.entries())
+            .map(([userId, user]) => ({ username: user.username, balance: user.balance }))
+            .sort((a, b) => b.balance - a.balance)
+            .slice(0, 5);
+        console.log("Leaderboard fetched:", leaderboard);
+        res.json(leaderboard);
+    } catch (error) {
+        console.error("Leaderboard error:", error.message);
+        res.status(500).json({ success: false, error: "Failed to fetch leaderboard" });
+    }
 });
 
 bot.onText(/\/start/, (msg) => {
