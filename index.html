@@ -11,14 +11,14 @@
 </head>
 <body>
     <div class="container mt-5 pt-4">
-        <div class="text-center mb-4">
+        <div class="text-center mb-5">
             <div class="pi-logo-placeholder mb-3"></div>
-            <h1 class="display-4 pi-text animate-fade-in">OKAPI TOKEN Miner</h1>
-            <p class="lead">Mine OKAPI on Solana!</p>
+            <h1 class="display-5 pi-text">OKAPI TOKEN Miner</h1>
+            <p class="lead">Mine OKAPI on Solana</p>
         </div>
 
         <!-- Carousel -->
-        <div id="app-carousel" class="carousel slide carousel-fade">
+        <div id="app-carousel" class="carousel slide">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#app-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#app-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -31,12 +31,12 @@
                     <div class="card pi-card text-center p-4">
                         <div class="card-body">
                             <h5 class="card-title">Wallet & Mining</h5>
-                            <button id="connect-wallet" class="btn btn-pi mb-3 animate-pulse">Connect Solana Wallet</button>
+                            <button id="connect-wallet" class="btn btn-pi mb-3">Connect Solana Wallet</button>
                             <p class="mb-2">Wallet: <span id="wallet-address" class="text-primary">Not connected</span></p>
                             <p class="mb-2">Balance: <span id="token-balance" class="text-success">0</span> OKAPI</p>
                             <p class="mb-3">Mining Rate: <span id="mining-rate" class="text-warning">1</span> OKAPI/tap</p>
-                            <button id="mine-btn" class="btn btn-pi btn-lg mt-3 animate-scale" disabled>Tap to Mine!</button>
-                            <button id="buy-booster" class="btn btn-pi mt-3 animate-scale">Buy Booster (10 OKAPI)</button>
+                            <button id="mine-btn" class="btn btn-pi btn-lg mt-3" disabled>Tap to Mine!</button>
+                            <button id="buy-booster" class="btn btn-pi mt-3">Buy Booster (10 OKAPI)</button>
                         </div>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                             <h5 class="card-title">Daily Tasks</h5>
                             <ul class="list-group list-group-flush" id="task-list">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Invite a friend (+100 OKAPI) <button class="btn btn-sm btn-pi claim-task animate-scale">Claim</button>
+                                    Invite a friend (+100 OKAPI) <button class="btn btn-sm btn-pi claim-task">Claim</button>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Join our channel (+50 OKAPI) <button class="btn btn-sm btn-pi claim-task animate-scale">Claim</button>
+                                    Join our channel (+50 OKAPI) <button class="btn btn-sm btn-pi claim-task">Claim</button>
                                 </li>
                             </ul>
                         </div>
@@ -70,9 +70,9 @@
                     <div class="card pi-card text-center p-4">
                         <div class="card-body">
                             <h5 class="card-title">Refer Friends</h5>
-                            <p class="mb-3">Earn more by inviting friends!</p>
+                            <p class="mb-3">Earn more by inviting friends</p>
                             <input id="referral-link" class="form-control pi-input mb-2" readonly value="https://t.me/OkapiTokenBot?start=ref123">
-                            <button id="copy-referral" class="btn btn-pi mt-2 animate-scale">Copy Link</button>
+                            <button id="copy-referral" class="btn btn-pi mt-2">Copy Link</button>
                         </div>
                     </div>
                 </div>
